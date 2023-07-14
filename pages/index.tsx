@@ -37,21 +37,24 @@ export default () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 items-center justify-center h-screen p-8 text-center xl:w-2/3 mx-auto">
+    <div className="flex flex-col gap-4 items-center justify-center min-h-screen p-8 text-center xl:w-2/3 mx-auto">
       <h1 className="text-5xl font-semibold text-slate-800">
         Descarga tu <span className="text-indigo-500 font-semibold">Calendario</span> - PUJ
       </h1>
       <div className="flex items-center gap-2 bg-orange-200 p-2 rounded-md text-red-600">
-        <AiOutlineWarning size={20} strokeWidth={25} />
+        <AiOutlineWarning size={20} strokeWidth={25} className="hidden xl:flex" />
         <p className="font-semibold">Esta web solo ha sido probada en condiciones controladas, ¡Revisa tu horario, no te confies!</p>
+      </div>
+      <div className="flex xl:hidden items-center gap-2 bg-red-200 p-2 rounded-md text-red-600">
+        <p className="font-semibold">¡Debes usar un Computador para realizar los pasos!</p>
       </div>
       <div className="text-left bg-slate-100 flex flex-col gap-2 p-2 px-3 rounded-md xl:w-3/4">
         <h2 className="font-semibold text-xl mb-2">¿Como Descargar tu calendario usando esta web?</h2>
         <p><b className="text-indigo-500">¡Es posible que tengas que usar otro navegador!</b> Hasta ahora solo ha sido probado con los siguientes navegadores, selecciona el de tu preferencia:</p>
         <div className="flex gap-3 p2 overflow-scroll">
-          <button onClick={() => setBrowser("edge")} className="px-3 p-2 rounded-md bg-indigo-200 font-semibold">Microsoft Edge</button>
-          <button onClick={() => setBrowser("firefox")} className="px-3 p-2 rounded-md bg-indigo-200 font-semibold">Firefox</button>
-          <button onClick={() => setBrowser("chrome")} className="px-3 p-2 rounded-md bg-indigo-200 font-semibold">Chrome</button>
+          <button onClick={() => setBrowser("edge")} className="px-3 p-2 rounded-md bg-indigo-200 font-semibold truncate">Microsoft Edge</button>
+          <button onClick={() => setBrowser("firefox")} className="px-3 p-2 rounded-md bg-indigo-200 font-semibold truncate">Firefox</button>
+          <button onClick={() => setBrowser("chrome")} className="px-3 p-2 rounded-md bg-indigo-200 font-semibold truncate">Chrome</button>
         </div>
         {browser &&
           <div className="flex flex-col gap-3 p-2 rounded-md bg-white">
@@ -73,7 +76,7 @@ export default () => {
           </div>
         }
       </div>
-      <textarea value={content} onChange={(e) => setContent(e.target.value)} className="bg-slate-200 p-2 rounded-md w-full" />
+      <textarea rows={3} value={content} onChange={(e) => setContent(e.target.value)} className="bg-slate-200 p-2 rounded-md w-full" />
       {error && <div className="flex items-center gap-2 bg-red-200 p-2 rounded-md text-red-600">
         <p>Algo salio mal... Revisa los pasos o reporta el error en <a target="_blank" href="https://github.com/achalogy/web_javecalendario">github</a></p>
       </div>}
