@@ -10,8 +10,8 @@ try {
 export default async () => {
   if (!browser) {
     browser = await puppeteer.launch({
-      // headless: "new",
-      headless: false,
+      headless: "new",
+      // headless: false,
       args: ['--no-sandbox', '--disable-gpu'],
       timeout: 0,
     });
