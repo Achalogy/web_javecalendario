@@ -1,5 +1,7 @@
 export interface IClase {
+  line: string;
   code: string;
+  section: string;
   name: string;
   clases: {
     num_clase: string;

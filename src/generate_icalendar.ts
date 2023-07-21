@@ -36,24 +36,20 @@ export default (clases: IClase[]): string => {
               return false
             }
           })
+          
+          if(oldEvent) break
 
-          if (oldEvent) {
-            let oldSummary = oldEvent.summary()
-
-            oldEvent.summary(`${clase.component}${clase.component ? " - " : ""}${oldSummary.split(" - ").at(-1)} | ${detalles.name}`)
-          } else {
-            cal.createEvent({
-              start,
-              end,
-              summary: `${clase.component}${clase.component ? " - " : ""}${detalles.name}`,
-              description: `Profesor: ${clase.teacher}`,
-              location: clase.classroom,
-              repeating: {
-                freq: ICalEventRepeatingFreq.WEEKLY,
-                until: end_date
-              }
-            })
-          }
+          cal.createEvent({
+            start,
+            end,
+            summary: `${detalles.name}`,
+            description: `Profesor: ${clase.teacher}`,
+            location: clase.classroom,
+            repeating: {
+              freq: ICalEventRepeatingFreq.WEEKLY,
+              until: end_date
+            }
+          })
 
           break
         }

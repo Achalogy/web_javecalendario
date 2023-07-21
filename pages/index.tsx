@@ -2,7 +2,8 @@ import { useState } from "react"
 import { AiOutlineWarning } from 'react-icons/ai'
 export default () => {
 
-  const [content, setContent] = useState<string>("")
+  const [page1, setPage1] = useState<string>("")
+  const [page2, setPage2] = useState<string>("")
   const [browser, setBrowser] = useState<"edge" | "chrome" | "firefox" | undefined>()
   const [error, setError] = useState<boolean>(false)
 
@@ -10,14 +11,15 @@ export default () => {
     const response = await fetch('/api/calendar', {
       method: "POST",
       body: JSON.stringify({
-        content
+        page1,
+        page2
       }),
       headers: {
         "Content-Type": "application/json"
       }
     })
 
-    if(response.status != 200) return setError(true)
+    if (response.status != 200) return setError(true)
 
     const blobResponse = await (response).blob()
 
@@ -58,7 +60,7 @@ export default () => {
         </div>
         {browser &&
           <div className="flex flex-col gap-3 p-2 rounded-md bg-white">
-            <p><b>Primer Paso: </b>Entra acá: <a className="text-indigo-500" target="_blank" href="https://cs.javeriana.edu.co:8443/psc/CS92PRO/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSR_SSENRL_LIST.GBL?Page=SSR_SSENRL_LIST&Action=A&ACAD_CAREER=PREG&INSTITUTION=PUJAV&STRM=2330">Intranet</a></p>
+            <p><b>Primer Paso: </b>Entra acá: <a className="text-indigo-500" target="_blank" href="https://cs.javeriana.edu.co:8443/psc/CS92PRO/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=PREG&INSTITUTION=PUJAV&STRM=2330">Intranet</a></p>
             <p>Deberia aparecer tu horario en Vistado Listado, ¡No toques nada en la web!, si no te sale tu horario, vuelve a entrar al enlace.</p>
             {
               browser == "edge" ?
@@ -71,16 +73,26 @@ export default () => {
                 </>
             }
             <p><b>Tercer Paso: </b> Copia todo el contenido de la pagina que se te abrió. <span className="px-2 p-1 bg-slate-200 rounded-md">{`(deberia iniciar con algo similar a <!DOCTYPE html>)`}</span></p>
-            <p><b>Cuarto Paso: </b> Pega el contenido en el siguiente espacio y has click en <span className="font-semibold px-2 p-1 bg-slate-200 rounded-md">Descargar</span></p>
-            <p><b>Quinto Paso: </b> Investiga como importar un archivo <span className="font-semibold px-2 p-1 bg-slate-200 rounded-md">ical</span> en tu calendario de preferencia, o si usas <span className="font-semibold px-2 p-1 bg-slate-200 rounded-md">google calendar</span> entra <a target="_blank" className="text-indigo-500" href="https://calendar.google.com/calendar/u/0/r/settings/export">acá</a></p>
+            <p><b>Cuarto Paso: </b> Pega el contenido en el siguiente espacio (primero pagina 1 y luego pagina 2) y has click en <span className="font-semibold px-2 p-1 bg-slate-200 rounded-md">Descargar</span></p>
+            <p><b>Quito Paso: </b>Entra acá: <a className="text-indigo-500" target="_blank" href="https://cs.javeriana.edu.co:8443/psc/CS92PRO/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSR_SSENRL_LIST.GBL?Page=SSR_SSENRL_LIST&Action=A&ACAD_CAREER=PREG&INSTITUTION=PUJAV&STRM=2330">Intranet</a> y realiza los mismos pasos desde el segundo hasta el cuarto.</p>
+            <p><b>Sexto Paso: </b> Investiga como importar un archivo <span className="font-semibold px-2 p-1 bg-slate-200 rounded-md">ical/ics</span> en tu calendario de preferencia, o si usas <span className="font-semibold px-2 p-1 bg-slate-200 rounded-md">google calendar</span> entra <a target="_blank" className="text-indigo-500" href="https://calendar.google.com/calendar/u/0/r/settings/export">acá</a></p>
           </div>
         }
       </div>
-      <textarea rows={3} value={content} onChange={(e) => setContent(e.target.value)} className="bg-slate-200 p-2 rounded-md w-full" />
+      <div className="flex flex-col xl:flex-row gap-4 w-full flex-1">
+        <div className="flex flex-1 flex-col gap-2">
+          <p className="font-black text-lg tracking-wide">Página 1</p>
+          <textarea rows={3} value={page1} onChange={(e) => setPage1(e.target.value)} className="flex-1 bg-slate-200 p-2 rounded-md w-full" />
+        </div>
+        <div className="flex flex-1 flex-col gap-2">
+          <p className="font-black text-lg tracking-wide">Página 2</p>
+          <textarea rows={3} value={page2} onChange={(e) => setPage2(e.target.value)} className="flex-1 bg-slate-200 p-2 rounded-md w-full" />
+        </div>
+      </div>
       {error && <div className="flex items-center gap-2 bg-red-200 p-2 rounded-md text-red-600">
         <p>Algo salio mal... Revisa los pasos o reporta el error en <a target="_blank" href="https://github.com/achalogy/web_javecalendario">github</a></p>
       </div>}
-      <button disabled={!content} onClick={submit} className="disabled:saturate-0">
+      <button disabled={!page1 || !page2} onClick={submit} className="disabled:saturate-0">
         <p className="px-4 p-2 bg-indigo-500 text-white font-semibold text-lg rounded-full">Descargar</p>
       </button>
       <p className="text-base">Creador: <a target="_blank" href="https://achalogy.dev/" className="text-indigo-400">Achalogy</a> - <a target="_blank" className="text-indigo-400" href="https://github.com/achalogy/web_javecalendario">Código Fuente y Reportes</a> </p>
